@@ -88,3 +88,82 @@ cargo test --package myexponent --lib -- tests::it_works --exact --nocapture --i
 cargo run --example basic
 ```
 
+### Cargo工作区
+工作区：它们允许你在可以共享相同的 Cargo.lock 文件和公共目录,或者输出目录的目录下创建本地程序库。
+
+就是在当前项目内新建一个目录，他拥有一个Cargo.toml文件，并有[package]版本信息，项目根目录下的Cargo.toml在[[package]]中包含这个新的目录即可。
+```bash
+cargo build  #编译所有成员
+cargo run  -p app  #只运行app的包
+cargo test -p my_carte  #只测试 my_carte
+
+```
+```toml
+#新建目录的cargo.toml文件，他是个可执行文件，所在目录是app
+[package]
+name = "app"
+version = "0.1.0"
+authors = ["Rahul Sharma <creativcoders@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+my_crate = { path = "../my_crate" }
+```
+```toml
+#新建目录的cargo.toml文件，他是个动态库，所在目录是my_crate 
+[package]
+name = "my_crate"
+version = "0.1.0"
+authors = ["Rahul Sharma <rsconceptx@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+```
+```toml
+#根目录下的cargo.toml文件
+# workspace_demo/Cargo.toml
+
+[workspace]
+members = [
+    "app",
+    "my_crate"
+]
+```
+```toml
+# 根目录下的 Cargo.lock文件，在编译后会自动生成和修改，无需手动变更。
+version = 4
+
+[[package]]
+name = "app"
+version = "0.1.0"
+dependencies = [
+ "my_crate",
+]
+
+[[package]]
+name = "my_crate"
+version = "0.1.0"
+```
+
+### 子命令和Cargo安装
+命令通常来自 crates.io、GitHub,或者本地项目目录下的二进制文件。
+安装的内容会保存在/home/用户/.cargo/bin/目录下
+```bash
+# 安装工具的命令
+cargo install 工具名称
+# 例子： cargo install cargo-watch
+# 搜索命令
+cargo search 工具名称
+
+#常用工具（需要安装）
+cargo-watch     #可以在代码发生变动后于后台自动构建项目,从而帮助你缩短修复、编译及运行代码的周期
+cargo-edit      #用于自动将依赖项添加到你的 Cargo.toml 文件中
+cargo-deb       #可以创建 Debian 软件包
+cargo-outdated  #可以显示 Cargo 项目中过时的软件依赖项
+
+
+#代码格式化的命令（自带）
+cargo clippy
+    #执行后就会提示那些代码可以改进。
+```
+
