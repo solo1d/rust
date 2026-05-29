@@ -9,7 +9,7 @@
 echo 'export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup' >> ~/.bashrc
 echo 'export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup' >> ~/.bashrc
 
-# 安装 rustup（官方方式）
+# 安装 rustup（官方方式）可能需要科学上网
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #按提示选择 1（Proceed with installation），完成后执行：
 source $HOME/.cargo/env
