@@ -15,7 +15,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 ```
 
+```bash
+# fish 终端
+echo 'set -x RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup' >> ~/.config/fish/config.fish
+echo 'set -x RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup' >> ~/.config/fish/config.fish
 
+# 安装 rustup（官方方式）可能需要科学上网
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#按提示选择 1（Proceed with installation），完成后执行：
+source "$HOME/.cargo/env.fish" 
+```
 
 ## 更新Rust和Rustup
 
